@@ -144,6 +144,9 @@ app.post('/incoming', async (req, res) => {
 	console.log('Sending push notification to', device, 'with message', notification);
 	let pushResult = await push.sendToDevice(device.identifier, {
 		data: notification,
+		"android":{
+			"priority": "high"
+		}
 	});
 	console.log("Push result: %j", pushResult);
 	if (pushResult.failureCount > 0) {
