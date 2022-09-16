@@ -142,11 +142,9 @@ app.post('/incoming', async (req, res) => {
 		ringingURL: `${body.endpoint}/calls/${body.domain}/ringing/${body.subscriber.msisdn}/${body.session}`,
 	};
 	console.log('Sending push notification to', device, 'with message', notification);
-	let pushResult = await push.sendToDevice(device.identifier, {
-		data: notification,
-		"android":{
-			"priority": "high"
-		}
+	let pushResult = await push.sendToDevice(device.identifier, { data: notification }, {
+		priority: 'high',
+		timeToLive: 60
 	});
 	console.log("Push result: %j", pushResult);
 	if (pushResult.failureCount > 0) {
