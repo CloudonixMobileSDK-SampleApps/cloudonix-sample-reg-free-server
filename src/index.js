@@ -102,6 +102,7 @@ app.use(express.json());
  * Healthcheck responder
  */
 app.get('/', (req, res, next) => {
+	console.log("Health check");
 	res.send({status:true});
 });
 
@@ -110,6 +111,7 @@ app.get('/', (req, res, next) => {
  * This is for testing and inherently insecure - do not put in production
  */
 app.get('/devices', async (req, res) => {
+	console.log("Listing devices");
 	let devices = await db.listDevices();
 	res.send(devices);
 });
@@ -118,6 +120,7 @@ app.get('/devices', async (req, res) => {
  * Register a new device by sending a JSON as such: {"identifier": "your-app-PN-identifier", "msisdn": "number-you-want-to-use", "type": "android|ios"}
  */
 app.post('/devices', async (req, res) => {
+	console.log("Registering a new device");
 	if (!req.body || !req.body.identifier)
 		return res.status(400).send({status:false, message:"Missing device 'identifier'"});
 	if (!req.body.msisdn)
@@ -130,6 +133,7 @@ app.post('/devices', async (req, res) => {
  * Handle the Cloudonix Platform incoming call message
  */
 app.post('/incoming', async (req, res) => {
+	console.log("Receiving an incoming call");
 	let body = req.body;
 	if (!body || !body.session)
 		return res.status(400).send({status: false, message: 'Not a valid Cloudonix registration-free message!'});
